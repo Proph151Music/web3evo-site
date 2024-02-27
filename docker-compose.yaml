@@ -13,7 +13,7 @@ services:
     ports:
       - 3306:3306
     healthcheck:
-      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      test: ['CMD', 'mysqladmin', 'ping', '-h', '5.161.116.200']
       interval: 30s
       timeout: 10s
       retries: 5
@@ -39,7 +39,7 @@ services:
     networks:
       - network
     extra_hosts:
-      - 'host.docker.internal:host-gateway'
+      - 'dockerhost:5.161.116.200'
 
   frontend:
     depends_on:
@@ -48,7 +48,7 @@ services:
     container_name: frontend
     environment:
       - PORT=6542
-      - REACT_APP_DOCKER_API=http://localhost:5000
+      - REACT_APP_DOCKER_API=http://5.161.116.200:5000
       - REACT_APP_BASE_API_URL=http://5.161.216.21:7500
       - GLOBAL_L0_URL=http://5.161.216.21:9000
       - METAGRAPH_L1_DATA_URL=http://5.161.216.21:8500
