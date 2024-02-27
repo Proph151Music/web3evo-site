@@ -28,7 +28,6 @@ export default function CreateAccountPage() {
       id: 'password',
       icon: '/assets/icons/LockKey.svg',
       text: 'Password',
-      type: 'password', // Specify type as password to mask input
       value: signUpData.password,
       onChange: (e) => handleSignUp('password', e.target.value)
     },
@@ -36,7 +35,6 @@ export default function CreateAccountPage() {
       id: 'passwordConfirmation',
       icon: '/assets/icons/LockKey.svg',
       text: 'Confirm Password',
-      type: 'password', // Specify type as password to mask input
       value: signUpData.passwordConfirmation,
       onChange: (e) => handleSignUp('passwordConfirmation', e.target.value)
     }

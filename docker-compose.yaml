@@ -49,9 +49,9 @@ services:
     environment:
       - PORT=6542
       - REACT_APP_DOCKER_API=http://localhost:5000
-      - REACT_APP_BASE_API_URL=http://localhost:9400
-      - REACT_APP_GLOBAL_L0_URL=http://localhost:9000
-      - REACT_APP_METAGRAPH_L1_DATA_URL=http://localhost:8000
+      - REACT_APP_BASE_API_URL=http://5.161.216.21:7500
+      - GLOBAL_L0_URL=http://5.161.216.21:9000
+      - METAGRAPH_L1_DATA_URL=http://5.161.216.21:8500
     ports:
       - '6542:6542'
 

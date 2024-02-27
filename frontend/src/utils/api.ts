@@ -75,7 +75,7 @@ export const ApiErrorResponseSchema = z.object({
 
 export const RegistrationBodySchema = z
   .object({
-    username: z.string().min(6).max(256),
+    username: z.string().min(6).max(12),
     email: z.string().email(),
     password: z
       .string()

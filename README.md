@@ -60,10 +60,6 @@ With the servers still running, open a new terminal instance and from root folde
 npm run prisma:migrate
 ```
 
-> [!NOTE]
-> If getting following error `EACCES: permission denied, unlink '/app/node_modules/.prisma/client/index.js'`
-> Run `chown -R node:node node_modules/.prisma `
-
 Note that this will run the `prisma migrate dev` command. If you are migrating to a production database, you should instead run:
 
 ```bash
