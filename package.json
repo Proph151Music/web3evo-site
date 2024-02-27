@@ -1,0 +1,24 @@
+{
+  "name": "nft-marketplace",
+  "private": true,
+  "scripts": {
+    "install:all": "npm i && cd ./backend && npm i && cd ../frontend && npm i",
+    "prisma:generate": "cd ./backend && npm run prisma:generate",
+    "prisma:migrate": "cd ./backend && npm run prisma:migrate",
+    "prisma:deploy": "cd ./backend && npm run prisma:deploy",
+    "prisma:seed": "cd ./backend && npm run prisma:seed",
+    "prisma:studio": "cd ./backend && npm run prisma:studio",
+    "servers": "sudo docker compose -f docker-compose.yaml -f docker-compose.local.yaml up --build",
+    "servers:db": "sudo docker compose -f docker-compose.yaml -f docker-compose.local.yaml up -d db --build",
+    "servers:backend": "sudo docker compose -f docker-compose.yaml -f docker-compose.local.yaml up -d db backend --build",
+    "servers:frontend": "sudo docker compose -f docker-compose.yaml -f docker-compose.local.yaml up -d frontend --build",
+    "servers:shutdown": "sudo docker compose down",
+    "format": "prettier --write ./**/*.{ts,tsx}"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.3"
+  },
+  "dependencies": {
+    "dotenv-expand": "^10.0.0"
+  }
+}

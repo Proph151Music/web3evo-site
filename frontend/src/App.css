@@ -1,0 +1,306 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+  --purple: #a259ff;
+  --bg-dark: #2b2b2b;
+  --bg-secondary: #3b3b3b;
+  --white: #fff;
+  --link-gray: #ccc;
+  --gray: #858584;
+  --font-work-sans: Work Sans, sans-serif;
+  --radius: 20px;
+}
+
+.d-flex {
+  display: flex;
+  gap: 10px;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.horizontal-gap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+body {
+  font-family: var(--font-work-sans);
+}
+
+.logo-image {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+nav {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  background-color: var(--bg-dark);
+  /* font-size: calc(10px + 2vmin); */
+  color: white;
+}
+
+.nft-page-title {
+  margin-bottom: 0;
+}
+
+.margin-none {
+  margin: 0;
+}
+
+.margin-sm {
+  margin: 10px 0;
+}
+
+.margin-m {
+  margin: 20px 0;
+}
+
+.margin-bottom-l {
+  margin-bottom: 40px;
+}
+
+.page-gutter {
+  padding: 2rem 7%;
+}
+
+@media screen and (max-width: 834px) {
+  .page-gutter {
+    padding: 2rem 30px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .page-gutter {
+    padding: 2rem 115px;
+  }
+}
+
+.home-category-cards-container {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 750px) {
+  .home-category-cards-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.category-card {
+  width: 100%;
+}
+
+.how-it-works-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.how-it-works-card {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+}
+
+.how-it-works-card-text {
+  padding: 0 1rem;
+}
+
+.how-it-works-card img {
+  max-height: 180px;
+  max-width: 50%;
+}
+
+@media (min-width: 800px) {
+  .how-it-works-container {
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .how-it-works-card {
+    flex-direction: column;
+    width: 100%;
+    padding: 1em 2em;
+  }
+
+  .how-it-works-card img {
+    min-width: 100%;
+    min-height: 50%;
+  }
+}
+
+.subscribe-section {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 750px) {
+  .subscribe-section {
+    flex-direction: row;
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius);
+    padding: 40px;
+    gap: 40px;
+    justify-content: space-evenly;
+  }
+  .subscribe-section img {
+    max-width: 40%;
+  }
+}
+
+@media (min-width: 750px) {
+  .footer-sections {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .footer-sections > section {
+    flex: 1;
+  }
+}
+
+.footer-social-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.hr-spaced {
+  margin: 30px 0;
+}
+
+a {
+  color: var(--link-gray);
+  text-decoration: none;
+}
+
+.subscribe-widget {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.text-input {
+  display: flex;
+  background: var(--white);
+  border: 1px solid #858584;
+  height: 46px;
+  width: 100%;
+  border-radius: var(--radius);
+}
+
+input[type='text'],
+input[type='password'] {
+  background: var(--white);
+  width: 98%;
+  padding: 0 10px;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: var(--font-work-sans);
+  outline: none;
+}
+
+.input-icon {
+  margin-left: 16px;
+  margin-right: 4px;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.nft-banner-image {
+  background-image: url('/public/assets/nft-page/orbitians-nft-banner-small.svg');
+  min-height: 280px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.nft-page-description {
+  margin-top: 30px;
+}
+
+.tab-bar {
+  border-top: 1px solid var(--gray);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.tab-content {
+  background-color: var(--bg-secondary);
+  padding: 2rem;
+  border-bottom: 2px solid var(--bg-dark);
+}
+
+.tab {
+  color: var(--gray);
+  padding: 20px 0;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.selected-tab {
+  border-bottom: 2px solid var(--link-gray);
+  color: var(--white);
+}
+
+.hero-home-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 100px 1fr;
+  grid-template-areas:
+    'title image'
+    'subtitle image'
+    'get-started image';
+  margin-bottom: 100px;
+}
+
+.hero-home-section__title {
+  grid-area: title;
+}
+
+.hero-home-section__subtitle {
+  grid-area: subtitle;
+}
+
+.hero-home-section__image {
+  grid-area: image;
+}
+
+.hero-home-section__get-started {
+  grid-area: get-started;
+}
+
+@media (max-width: 767px) {
+  .hero-home-section {
+    grid-template-areas:
+      'title title'
+      'subtitle subtitle'
+      'image image'
+      'get-started get-started';
+  }
+}

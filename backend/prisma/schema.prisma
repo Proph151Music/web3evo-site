@@ -1,0 +1,117 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum TokenType {
+  ACCESS_TOKEN
+  RESET_TOKEN
+  VERIFICATION_TOKEN
+  REFRESH_TOKEN
+}
+
+model User {
+  id             String          @id @default(uuid())
+  walletHash     String?
+  name           String?
+  username       String          @unique
+  email          String          @unique
+  role           Role            @default(USER)
+  password       String
+  privateKey     String
+  isVerified     Boolean         @default(false)
+  blogs          Blog[]
+  userTokens     UserToken[]
+  nftCollections NftCollection[]
+  nftTokens      NftToken[]
+  tokens         Token[]
+}
+
+model UserToken {
+  id        String    @id @default(uuid())
+  token     String    @db.VarChar(1000)
+  tokenType TokenType
+  expTime   DateTime
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    String
+
+  @@index([userId, tokenType])
+}
+
+model Blog {
+  id              String   @id @default(uuid())
+  authorId        String
+  blogTitle       String
+  dateCreated     DateTime @default(now())
+  blogDescription String?
+  blogBanner      String?
+  author          User     @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([authorId, blogTitle])
+}
+
+model NftCollection {
+  id          String     @id
+  name        String
+  owner       User       @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ownerId     String
+  logoUrl     String
+  tokensCount Int        @default(0)
+  nftTokens   NftToken[]
+  dateMinted  DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@unique([name])
+  @@unique([ownerId, name])
+}
+
+model NftToken {
+  id               String             @id @default(uuid())
+  nftId            Int
+  imageUri         String
+  name             String
+  description      String             @default("")
+  ownerAddress     String
+  owner            User               @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ownerId          String
+  collection       NftCollection      @relation(fields: [collectionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  collectionId     String
+  NftTokenMetaData NftTokenMetaData[]
+  dateMinted       DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  @@index([ownerId, collectionId, name])
+}
+
+model NftTokenMetaData {
+  id         String   @id @default(uuid())
+  key        String
+  value      String
+  nftToken   NftToken @relation(fields: [nftTokenId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  nftTokenId String
+
+  @@unique([key, nftTokenId])
+}
+
+// TODO Remove this model from the schema and seeding logic
+model Token {
+  id               String   @id @default(uuid())
+  authorId         String
+  dateMinted       DateTime
+  title            String
+  tokenDescription String?
+  tokenImage       String?
+  author           User     @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([authorId, title])
+}

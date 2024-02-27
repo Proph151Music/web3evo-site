@@ -1,0 +1,10 @@
+# Docker Compose Override Configuration
+#
+# This file is an override configuration for the primary docker-compose.yaml.
+# It is intended to provide additional and optional environment settings that
+# are specific to development or other non-standard environments.
+services:
+  backend:
+    env_file:
+      - ./backend/.env
+      - ./backend/.env.local

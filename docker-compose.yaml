@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql
+    container_name: db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: app_db_prod
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: password
+      MYSQL_USER: admin
+    ports:
+      - 3306:3306
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    expose:
+      - '3306'
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./db/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - network
+
+  backend:
+    depends_on:
+      db:
+        condition: service_healthy
+    build: ./backend
+    container_name: backend
+    ports:
+      - '5000:5000'
+    volumes:
+      - ./backend:/app # Mount the local backend directory
+      - /app/node_modules # Avoid overriding node_modules
+    networks:
+      - network
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+
+  frontend:
+    depends_on:
+      - backend
+    build: ./frontend
+    container_name: frontend
+    environment:
+      - PORT=6542
+      - REACT_APP_DOCKER_API=http://localhost:5000
+      - REACT_APP_BASE_API_URL=http://localhost:9400
+      - REACT_APP_GLOBAL_L0_URL=http://localhost:9000
+      - REACT_APP_METAGRAPH_L1_DATA_URL=http://localhost:8000
+    ports:
+      - '6542:6542'
+
+networks:
+  network:
+    driver: bridge
+
+volumes:
+  db-data:

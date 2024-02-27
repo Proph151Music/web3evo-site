@@ -1,0 +1,75 @@
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, minmax(0, auto));
+  row-gap: 30px;
+  grid-template-areas:
+    'name       actions    actions'
+    'accolades  accolades  walletHash'
+    'bio        bio        bio'
+    'links      links      links';
+}
+
+.summary__name {
+  grid-area: name;
+}
+
+.summary__accolades {
+  grid-area: accolades;
+}
+
+.summary__bio {
+  grid-area: bio;
+}
+
+.summary__links {
+  grid-area: links;
+}
+
+.summary__actions {
+  grid-area: actions;
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+
+.summary__walletHash {
+  grid-area: walletHash;
+}
+
+@media screen and (max-width: 1000px) {
+  .summary {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, minmax(0, auto));
+    grid-template-areas:
+      'name        actions'
+      'accolades   accolades'
+      'bio         bio'
+      'walletHash  walletHash'
+      'links       links';
+  }
+}
+
+@media screen and (max-width: 834px) {
+  .summary {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(6, minmax(0, auto));
+    grid-template-areas:
+      'name'
+      'accolades'
+      'bio'
+      'walletHash'
+      'links'
+      'actions';
+  }
+  .summary__actions {
+    justify-content: start;
+  }
+}
+
+@media screen and (max-width: 634px) {
+  .summary__actions {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
