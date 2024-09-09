@@ -1,5 +1,5 @@
 
-# Example NFT Metagraph using the Data API
+# NFT Metagraph using the Data API
 
 This template demonstrates an example use case of NFTs (Non-Fungible Tokens) based on the ERC-721 standard. Note that this shows a custom implementation of NFTs within a single metagraph using the Data API. It is not meant to describe a cross-metagraph standard for Constellation Network NFTs. 
 
