@@ -87,7 +87,7 @@ export const createCollections = withErrorCatcher<
     await prisma.user.update({ where: { id: user.id }, data: { privateKey } });
     user.privateKey = privateKey;
   }
-
+  console.log('using pkey:', user.privateKey);
   const dag = Dag.create(user.privateKey);
 
   const signedActions = await Promise.all(
@@ -100,7 +100,8 @@ export const createCollections = withErrorCatcher<
   const mintingResponses = await Promise.all(
     signedActions.map((signedAction) => signedAction.send())
   );
-
+  console.log(mintingResponses);
+  await new Promise((r) => setTimeout(r, 30 * 1000));
   const collectionIds = mintingResponses.map(({ hash }) => hash);
 
   if (!collectionIds.length) {

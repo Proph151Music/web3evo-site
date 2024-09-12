@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import Axios from '~/lib/axios';
+import axios, { AxiosError } from 'axios';
 import { dag4 } from '@stardust-collective/dag4';
 import DagError from '~/errors/dag-error';
 
@@ -49,6 +49,10 @@ export type StargazerDagSignatureRequest = {
 
 export type DagAccount = ReturnType<typeof dag4.createAccount>;
 
+const isAxiosError = (value: any): value is AxiosError => {
+  return value?.isAxiosError === true;
+};
+
 /**
  * Represents a DAG (Directed Acyclic Graph) class used for
  * creating and signing actions related to a metagraph NFT collection.
@@ -75,21 +79,16 @@ export default class Dag {
   }) {
     const { actionMessage, account } = props;
     const { publicKey } = account.keyTrio;
-    const sendRequest = Dag.send;
 
-    const encodedMessage = Buffer.from(JSON.stringify(actionMessage), 'utf-8').toString('hex');
-    const hash = crypto
-      .createHash('sha256')
-      .update(Buffer.from(encodedMessage, 'hex'))
-      .digest('hex');
+    const encodedMessage = Buffer.from(JSON.stringify(actionMessage)).toString('base64');
+    const signature = await dag4.keyStore.dataSign(account.keyTrio.privateKey, encodedMessage);
 
-    const signature = await dag4.keyStore.sign(account.keyTrio.privateKey, hash);
     const uncompressedPublicKey = publicKey.length === 128 ? '04' + publicKey : publicKey;
 
     return {
       signature,
       publicKey: uncompressedPublicKey,
-      send: () => sendRequest({ publicKey: uncompressedPublicKey, signature, value: actionMessage })
+      send: () => Dag.send({ publicKey: uncompressedPublicKey, signature, value: actionMessage })
     };
   }
 
@@ -114,7 +113,25 @@ export default class Dag {
     }
 
     const metagraphL1DataUrl = `${euclidHost}:${metagraphL1DataPort}`;
-
-    return (await Axios.post<{ hash: string }>(`${metagraphL1DataUrl}/data`, body)).data;
+    let response;
+    try {
+      console.log('Sending Action Message:');
+      console.log(JSON.stringify(body, null, 2));
+      response = await axios.post(
+        `${metagraphL1DataUrl}/data`,
+        body
+      );
+      console.log('Response:');
+      console.log(JSON.stringify(response.data, null, 2));
+      return response.data;
+      //return (await axios.post<{ hash: string }>(`${metagraphL1DataUrl}/data`, body)).data;
+    } catch (e) {
+      if (isAxiosError(e)) {
+        console.log(`Status: ${e.status}`);
+        console.log(JSON.stringify(e.response?.data, null, 2));
+        throw new Error('Send Action Message Error: See above for details');
+      }
+      throw e;
+    }
   }
 }

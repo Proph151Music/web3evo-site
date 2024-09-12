@@ -20,7 +20,7 @@ export default function useWalletConnector(props: useWalletConnectorProps) {
       await activate(stargazerConnector);
       // Reload the page if the user dismisses the popup without connecting
       if (!hash && !web3ReactUpdateFiredRef.current) {
-        window.location.reload();
+    //    window.location.reload();
       }
     } catch (error) {
       console.error('Error connecting to Stargazer wallet:', error);
